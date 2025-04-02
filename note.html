@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forever Note</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3e5f5; /* Light lavender background */
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #ce93d8; /* Medium lavender color */
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: white; /* White background for the container */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        .note-area {
+            width: 100%;
+            height: 200px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 10px;
+            resize: vertical;
+            font-size: 16px;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        .media-upload {
+            margin: 20px 0;
+        }
+        .media-upload button {
+            background-color: #ce93d8; /* Medium lavender color */
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: background-color 0.3s;
+        }
+        .media-upload button:hover {
+            background-color: #b77bca; /* Darker shade on hover */
+        }
+        .image-preview, .audio-preview, .video-preview {
+            margin-top: 10px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .footer button {
+            margin: 0 5px;
+            padding: 8px 15px;
+            background-color: #ce93d8; /* Medium lavender color */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .footer button:hover {
+            background-color: #b77bca; /* Darker shade on hover */
+        }
+        .preview-item {
+            margin-bottom: 10px;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            background-color: #f9f9f9; /* Light background for preview items */
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        .preview-item img {
+            max-width: 100px;
+            max-height: 100px;
+            margin-right: 10px;
+            border-radius: 4px;
+        }
+        .remove-btn {
+            background-color: #ff4c4c; /* Red color for remove button */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 3px 8px;
+            margin-left: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .remove-btn:hover {
+            background-color: #e63939; /* Darker shade on hover */
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Forever Note</h1>
+</header>
+
+<div class="container">
+    <textarea class="note-area" placeholder="Write your letter here..."></textarea>
+    <div class="media-upload">
+        <h3>Add Media</h3>
+        <button onclick="document.getElementById('imageUpload').click()">Upload Images</button>
+        <input type="file" id="imageUpload" style="display:none;" multiple accept="image/*">
+        <button onclick="document.getElementById('audioUpload').click()">Upload Audio</button>
+        <input type="file" id="audioUpload" style="display:none;" accept="audio/*">
+        <button onclick="document.getElementById('videoUpload').click()">Upload Video</button>
+        <input type="file" id="videoUpload" style="display:none;" accept="video/*">
+    </div>
+
+    <div class="image-preview">
+        <h4>Image Previews:</h4>
+        <div id="imagePreviewContainer"></div>
+    </div>
+
+    <div class="audio-preview">
+        <h4>Audio Previews:</h4>
+        <div id="audioPreviewContainer"></div>
+    </div>
+
+    <div class="video-preview">
+        <h4>Video Previews:</h4>
+        <div id="videoPreviewContainer"></div>
+    </div>
+
+    <div class="footer">
+        <button id="saveBtn">Save</button>
+        <button id="shareBtn">Share</button>
+        <button id="deleteBtn">Delete Note</button>
+    </div>
+</div>
+
+<script>
+    // Image upload and preview
+    document.getElementById('imageUpload').addEventListener('change', function(event) {
+        const container = document.getElementById('imagePreviewContainer');
+        Array.from(event.target.files).forEach(file => {
+            if (!file.type.match('image.*')) return;
+            
+            const previewItem = document.createElement('div');
+            previewItem.className = 'preview-item';
+            
+            const img = document.createElement('img');
+            img.src = URL.createObjectURL(file);
+            
+            const fileName = document.createElement('span');
+            fileName.textContent = file.name;
+            
+            const removeBtn = document.createElement('button');
+            removeBtn.className = 'remove-btn';
+            removeBtn.textContent = '×';
+            removeBtn.onclick = () => previewItem.remove();
+            
+            previewItem.appendChild(img);
+            previewItem.appendChild(fileName);
+            previewItem.appendChild(removeBtn);
+            container.appendChild(previewItem);
+        });
+    });
+
+    // Audio upload and preview
+    document.getElementById('audioUpload').addEventListener('change', function(event) {
+        const container = document.getElementById('audioPreviewContainer');
+        Array.from(event.target.files).forEach(file => {
+            if (!file.type.match('audio.*')) return;
+            
+            const previewItem = document.createElement('div');
+            previewItem.className = 'preview-item';
+            
+            const audio = document.createElement('audio');
+            audio.controls = true;
+            audio.src = URL.createObjectURL(file);
+            
+            const fileName = document.createElement('span');
+            fileName.textContent = file.name;
+            
+            const removeBtn = document.createElement('button');
+            removeBtn.className = 'remove-btn';
+            removeBtn.textContent = '×';
+            removeBtn.onclick = () => previewItem.remove();
+            
+            previewItem.appendChild(audio);
+            previewItem.appendChild(fileName);
+            previewItem.appendChild(removeBtn);
+            container.appendChild(previewItem);
+        });
+    });
+
+    // Video upload and preview
+    document.getElementById('videoUpload').addEventListener('change', function(event) {
+        const container = document.getElementById('videoPreviewContainer');
+        Array.from(event.target.files).forEach(file => {
+            if (!file.type.match('video.*')) return;
+            
+            const previewItem = document.createElement('div');
+            previewItem.className = 'preview-item';
+            
+            const video = document.createElement('video');
+            video.controls = true;
+            video.src = URL.createObjectURL(file);
+            video.style.maxWidth = '200px';
+            
+            const fileName = document.createElement('span');
+            fileName.textContent = file.name;
+            
+            const removeBtn = document.createElement('button');
+            removeBtn.className = 'remove-btn';
+            removeBtn.textContent = '×';
+            removeBtn.onclick = () => previewItem.remove();
+            
+            previewItem.appendChild(video);
+            previewItem.appendChild(fileName);
+            previewItem.appendChild(removeBtn);
+            container.appendChild(previewItem);
+        });
+    });
+
+    // Button functionality
+    document.getElementById('saveBtn').addEventListener('click', function() {
+        alert('Note saved! (This would save to a database in a real application)');
+    });
+
+    document.getElementById('shareBtn').addEventListener('click', function() {
+        alert('Share functionality would go here');
+    });
+
+    document.getElementById('deleteBtn').addEventListener('click', function() {
+        if (confirm('Are you sure you want to delete this note?')) {
+            document.querySelector('.note-area').value = '';
+            document.getElementById('imagePreviewContainer').innerHTML = '';
+            document.getElementById('audioPreviewContainer').innerHTML = '';
+            document.getElementById('videoPreviewContainer').innerHTML = '';
+            alert('Note cleared!');
+        }
+    });
+</script>
+</body>
+</html>

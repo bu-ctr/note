@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Forever Day Blossom Payment</title>
+    <meta name="description" content="Forever Day - Make someone's day special" />
+    <meta name="author" content="Forever Day" />
+    
+    <!-- Important scripts -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+    <meta property="og:title" content="Forever Day Blossom Payment" />
+    <meta property="og:description" content="Make someone's day special with a Forever Day gift" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@ForeverDay" />
+    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="forever-style.css">
+    <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
+    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="payment-card">
+        <div class="white-section">
+          <h1 class="text-center">✨ Forever Day</h1>
+          <div class="lavender-stripe"></div>
+          <p class="text-center text-sm text-gray-600">Make someone's day special with a Forever Day gift</p>
+        </div>
+        
+        <div class="white-section">
+          <h2 class="section-title">
+            <span class="highlight-text">Your</span> Details
+          </h2>
+          
+          <div class="form-group">
+            <div class="input-floating">
+              <input type="text" id="payer-name" placeholder=" ">
+              <label for="payer-name">Full Name</label>
+              <div class="error-text" id="payer-name-error"></div>
+            </div>
+            
+            <div class="input-floating">
+              <input type="text" id="payer-address" placeholder=" ">
+              <label for="payer-address">Full Address</label>
+              <div class="error-text" id="payer-address-error"></div>
+            </div>
+            
+            <div class="input-floating">
+              <input type="email" id="payer-email" placeholder=" ">
+              <label for="payer-email">Email</label>
+              <div class="error-text" id="payer-email-error"></div>
+            </div>
+            
+            <div class="input-floating">
+              <input type="tel" id="payer-phone" placeholder=" ">
+              <label for="payer-phone">Phone</label>
+              <div class="error-text" id="payer-phone-error"></div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="lavender-section">
+          <h2 class="section-title">
+            <span class="white-highlight-text">Recipient</span> Details
+          </h2>
+          
+          <div class="form-group">
+            <div class="input-floating bg-white-90">
+              <input type="text" id="recipient-name" placeholder=" ">
+              <label for="recipient-name">Their Name</label>
+              <div class="error-text" id="recipient-name-error"></div>
+            </div>
+            
+            <div class="input-floating bg-white-90">
+              <input type="text" id="recipient-address" placeholder=" ">
+              <label for="recipient-address">Full Address</label>
+              <div class="error-text" id="recipient-address-error"></div>
+            </div>
+            
+            <div class="input-floating bg-white-90">
+              <input type="tel" id="recipient-phone" placeholder=" ">
+              <label for="recipient-phone">Their Phone</label>
+              <div class="error-text" id="recipient-phone-error"></div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="white-section">
+          <div id="status-message" class="status-message hidden"></div>
+          
+          <div class="button-group">
+            <button id="save-button" class="button-outline">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3.5 7 8.5 15 8.5"></polyline></svg>
+              <span>Save Information</span>
+            </button>
+            
+            <button id="pay-button" class="button-lavender pulse-gentle">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+              <span>Pay ₹100</span>
+            </button>
+          </div>
+          
+          <p class="text-center text-xs text-gray-500 mt-4">
+            Secure payment powered by Razorpay. Your information is encrypted and secure.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script src="forever-script.js"></script>
+  </body>
+</html>

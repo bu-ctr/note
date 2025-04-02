@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Firestore Test</title>
+    <!-- Load Firebase FIRST -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        button { padding: 10px; margin: 5px; }
+        #status { margin-top: 20px; padding: 10px; }
+    </style>
+</head>
+<body>
+    <button id="testConnection">Test Connection</button>
+    <button id="testWrite">Test Write</button>
+    <button id="testRead">Test Read</button>
+    <div id="status"></div>
+
+    <script>
+        // 1. Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyAnsttUGEs_o7vDHOOVBOL3Fh-4_KlmGSM",
+            authDomain: "paymentgateway-d6566.firebaseapp.com",
+            projectId: "paymentgateway-d6566",
+            storageBucket: "paymentgateway-d6566.appspot.com",
+            messagingSenderId: "100193414423",
+            appId: "1:100193414423:web:1ae131c75b9a223fa01b52"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const firestore = firebase.firestore();
+
+        // 2. Wait for DOM to load
+        document.addEventListener('DOMContentLoaded', function() {
+            // 3. Get buttons
+            const buttons = {
+                test: document.getElementById('testConnection'),
+                write: document.getElementById('testWrite'),
+                read: document.getElementById('testRead')
+            };
+
+            // 4. Verify buttons exist
+            for (const [name, btn] of Object.entries(buttons)) {
+                if (!btn) {
+                    alert(`Error: ${name} button not found!`);
+                    return;
+                }
+            }
+
+            // 5. Add event listeners
+            buttons.test.addEventListener('click', testConnection);
+            buttons.write.addEventListener('click', testWrite);
+            buttons.read.addEventListener('click', testRead);
+            
+            console.log("All buttons initialized!");
+        });
+
+        // Test functions
+        function testConnection() {
+            console.log("Connection test started");
+            document.getElementById('status').textContent = "Testing connection...";
+            
+            firestore.collection('test').doc('connection').set({
+                test: true,
+                timestamp: new Date()
+            })
+            .then(() => {
+                document.getElementById('status').textContent = "✅ Connection successful!";
+            })
+            .catch(err => {
+                document.getElementById('status').textContent = "❌ Connection failed";
+                console.error(err);
+            });
+        }
+
+        function testWrite() {
+            console.log("Write test started");
+            // ... (add your write test code)
+        }
+
+        function testRead() {
+            console.log("Read test started");
+            // ... (add your read test code)
+        }
+    </script>
+</body>
+</html>
